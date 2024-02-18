@@ -1,5 +1,42 @@
-<h1>My Simple Store</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Simple Store</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+<body class="bg-gray-100 flex flex-col min-h-screen">
 
-<div>
-  <%= link_to "New Product", :new_product %>
-</div>
+  <header class="bg-blue-500 text-white text-center py-4 px-6 flex justify-between items-center fixed top-0 left-0 w-full z-10">
+    <h1 class="text-3xl font-bold">My Simple Store</h1>
+    <div>
+      <%= link_to "New Product", :new_product, class: "bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600" %>
+    </div>
+  </header>
+
+  <div class="max-w-5xl mx-auto mt-8 flex flex-wrap gap-4 px-4 justify-center">
+    <% @products.each do |product| %>
+      <div class="w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-4">
+        <div class="bg-white p-4 shadow-md rounded-md">
+          <div class="w-full h-40 bg-gray-200 border border-gray-300 rounded-md overflow-hidden mb-4">
+            <% if product.image.attached? %>
+              <%= image_tag product.image, class: "object-cover w-full h-full rounded-md" %>
+            <% else %>
+              <div class="flex items-center justify-center h-full">
+                Image Not Available
+              </div>
+            <% end %>
+          </div>
+
+          <h2 class="text-xl font-semibold mb-2"><%= link_to product.product_name, product %></h2>
+          <p class="text-gray-600 mb-2"><%= product.product_desc %></p>
+          <p class="text-blue-500 mb-2">Price: <%= number_to_currency(product.amount) %></p>
+          <p class="text-green-500">Quantity: <%= product.qty %></p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+</body>
+</html>
